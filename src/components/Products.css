@@ -1,0 +1,474 @@
+/* Products.css */
+
+/* Секция товаров */
+.products-section {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+}
+
+.products-title {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 32px;
+  color: #2c3e50;
+}
+
+/* Контейнер */
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Колонки */
+.products-left-column {
+  flex: 2;
+  min-width: 300px;
+}
+
+.products-right-column {
+  flex: 1;
+  min-width: 300px;
+  align-self: start;
+}
+
+/* Сетка товаров */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+/* Карточка товара */
+.product-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  cursor: zoom-in;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+  padding: 15px;
+  text-align: left;
+}
+
+.product-title {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.product-description {
+  color: #666;
+  font-size: 13px;
+}
+
+/* Блок "О нас" */
+.about-block {
+  background: linear-gradient(135deg, #398137 0%, #e67e22 100%);
+  border-radius: 16px;
+  padding: 30px;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.about-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+.about-content {
+  font-size: 16px;
+  line-height: 1.8;
+  margin-top: 25px;
+}
+
+.about-content p {
+  margin-bottom: 15px;
+}
+
+.about-stats {
+  display: flex;
+  gap: 20px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Блок производства */
+.production-block {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.production-title {
+  margin-bottom: 20px;
+  color: #e67e22;
+}
+
+.production-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  height: auto;
+}
+
+.production-text {
+  text-align: left;
+  line-height: 1.6;
+  color: #444;
+}
+
+.production-text ul {
+  padding-left: 20px;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Блок контактов */
+.contacts-block {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  text-align: left;
+}
+
+.contacts-title {
+  margin-bottom: 15px;
+  color: #2c3e50;
+  border-bottom: 2px solid #e67e22;
+  display: inline-block;
+}
+
+.contacts-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #764ba2;
+  font-weight: 500;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.contact-icon {
+  font-size: 24px;
+}
+
+.price-button-wrapper {
+  margin-top: 20px;
+}
+
+.price-button {
+  display: inline-block;
+  background-color: #e67e22;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.price-button:hover {
+  background-color: #d35400;
+}
+
+.contact-details {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.contact-details p {
+  line-height: 1.6;
+}
+
+/* Модальное окно */
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .products-section {
+    padding: 40px 15px;
+  }
+  
+  .products-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+  
+  .products-container {
+    gap: 20px;
+    flex-direction: column;
+  }
+  
+  .products-left-column,
+  .products-right-column {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .product-card {
+    cursor: pointer;
+  }
+  
+  .product-image {
+    height: 200px;
+  }
+  
+  .about-block {
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .about-title {
+    font-size: 24px;
+  }
+  
+  .about-stats {
+    gap: 15px;
+  }
+  
+  .stat-number {
+    font-size: 28px;
+  }
+  
+  .production-block,
+  .contacts-block {
+    padding: 15px;
+  }
+  
+  .contacts-title {
+    font-size: 20px;
+  }
+  
+  .price-button {
+    padding: 14px;
+    font-size: 16px;
+  }
+  
+  .contact-details {
+    font-size: 13px;
+  }
+  
+  .modal-close {
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-item {
+    flex: 1 1 calc(50% - 15px);
+    min-width: 100px;
+  }
+}
+
+/* Слоган блок */
+.slogan-block {
+  margin-top: 3rem;
+  text-align: center;
+  padding: 4rem;
+  background: linear-gradient(135deg, #fff5e6 0%, #ffe6d5 100%);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.slogan-text {
+  font-family: 'Marck Script', cursive;
+  font-size: 4rem;
+  font-weight: normal;
+  line-height: 1.2;
+  color: #d45a2b;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  letter-spacing: 2px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .slogan-text {
+    font-size: 2rem;
+  }
+  
+  .slogan-block {
+    margin-top: 1.5rem;
+    padding: 1rem;
+  }
+}
+
+/* ========== МОДАЛЬНОЕ ОКНО ПРАЙС-ЛИСТА ========== */
+
+/* Модальное окно (фон) */
+.price-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  overflow-y: auto;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Контент модального окна */
+.price-modal-content {
+  max-width: 1200px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: transparent;
+  border-radius: 12px;
+  animation: slideIn 0.3s ease;
+}
+
+/* Анимация контента */
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Кнопка закрытия */
+.price-modal-close {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  z-index: 2001;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-family: Arial, sans-serif;
+}
+
+.price-modal-close:hover {
+  background-color: #e67e22;
+  transform: scale(1.1);
+}
+
+/* Скрываем скролл на body когда модалка открыта */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Адаптивность для модального окна */
+@media (max-width: 768px) {
+  .price-modal {
+    padding: 10px;
+  }
+  
+  .price-modal-content {
+    max-height: 95vh;
+  }
+  
+  .price-modal-close {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .price-modal-close {
+    top: 5px;
+    right: 5px;
+    width: 35px;
+    height: 35px;
+    font-size: 25px;
+  }
+}
+
+/* Для устройств с touch-экраном */
+@media (hover: none) and (pointer: coarse) {
+  .price-modal-close {
+    background-color: rgba(230, 126, 34, 0.8);
+    width: 44px;
+    height: 44px;
+  }
+}
+

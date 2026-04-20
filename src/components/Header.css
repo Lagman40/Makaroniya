@@ -1,0 +1,52 @@
+/* Header.css */
+.app-header {
+  background-color: var(--accent);
+  padding: 20px 40px;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.app-title {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  font-size: 36px;
+  color: var(--bg);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 15px 30px;
+  }
+  
+  .app-title {
+    font-size: 28px;
+    letter-spacing: 1.5px;
+  }
+}
+
+/* Адаптивность для мобильных телефонов */
+@media (max-width: 480px) {
+  .app-header {
+    padding: 12px 20px;
+  }
+  
+  .app-title {
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 320px) {
+  .app-title {
+    font-size: 18px;
+  }
+}
