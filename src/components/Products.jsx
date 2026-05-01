@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import mask1 from '../assets/images/mask1.png'; 
 import mask2 from '../assets/images/mask2.png';
 import mask3 from '../assets/images/mask3.png';
@@ -6,7 +6,7 @@ import mask4 from '../assets/images/mask4.png';
 import mask5 from '../assets/images/mask5.png';
 import mask6 from '../assets/images/mask6.png';
 import made from '../assets/images/made.png';
-import PriceTable from './PriceTable'; // Импортируем компонент прайса
+import PriceTable from './PriceTable';
 import './Products.css';
 
 const products = [
@@ -20,7 +20,44 @@ const products = [
 
 const Products = () => {
   const [selectedImg, setSelectedImg] = useState(null);
-  const [showPriceModal, setShowPriceModal] = useState(false); // Состояние для модального окна прайса
+  const [showPriceModal, setShowPriceModal] = useState(false);
+
+  // Блокировка прокрутки при открытом модальном окне
+  useEffect(() => {
+    if (showPriceModal) {
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.style.overflow = '';
+      document.body.classList.remove('modal-open');
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+      document.body.classList.remove('modal-open');
+    };
+  }, [showPriceModal]);
+
+  // Обработчик клавиши Escape
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        if (showPriceModal) {
+          setShowPriceModal(false);
+        }
+        if (selectedImg) {
+          setSelectedImg(null);
+        }
+      }
+    };
+    
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [showPriceModal, selectedImg]);
+
+  const closePriceModal = () => {
+    setShowPriceModal(false);
+  };
 
   const styles = {
     productCard: {
@@ -42,7 +79,7 @@ const Products = () => {
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(0,0,0,0.8)',
+      backgroundColor: 'rgba(0,0,0,0.9)',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -53,47 +90,8 @@ const Products = () => {
       maxWidth: '90%',
       maxHeight: '90%',
       borderRadius: '8px',
+      objectFit: 'contain',
     },
-    priceModal: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0,0,0,0.9)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: 2000,
-      overflowY: 'auto',
-      padding: '20px',
-    },
-    priceModalContent: {
-      maxWidth: '1200px',
-      width: '100%',
-      maxHeight: '90vh',
-      overflowY: 'auto',
-      backgroundColor: 'transparent',
-      borderRadius: '12px',
-    },
-    closeButton: {
-      position: 'fixed',
-      top: '20px',
-      right: '30px',
-      fontSize: '40px',
-      fontWeight: 'bold',
-      color: 'white',
-      cursor: 'pointer',
-      zIndex: 2001,
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      width: '50px',
-      height: '50px',
-      borderRadius: '50%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      transition: 'all 0.3s ease',
-    }
   };
 
   return (
@@ -117,6 +115,7 @@ const Products = () => {
                   src={item.image} 
                   alt={item.title} 
                   style={styles.productImage} 
+                  loading="lazy"
                 />
                 <div className="product-info">
                   <h3 className="product-title">{item.title}</h3>
@@ -155,13 +154,6 @@ const Products = () => {
               </div>
             </div>
           </div>
-
-          {selectedImg && (
-            <div onClick={() => setSelectedImg(null)} style={styles.modal}>
-              <img src={selectedImg} style={styles.modalImage} alt="Увеличенное фото" />
-              <span className="modal-close">&times;</span>
-            </div>
-          )}
         </div>
 
         <div className="products-right-column">
@@ -172,6 +164,7 @@ const Products = () => {
               src={made} 
               alt="Наш цех" 
               className="production-image"
+              loading="lazy"
             />
             <div className="production-text">
               <p>Мы используем только современное оборудование и традиционные рецепты.</p>
@@ -197,11 +190,11 @@ const Products = () => {
                 Написать в MAX
               </a>
               
-              {/* ИСПРАВЛЕННАЯ КНОПКА ПРАЙСА */}
               <div className="price-button-wrapper">
                 <button 
                   onClick={() => setShowPriceModal(true)}
                   className="price-button"
+                  aria-label="Открыть прайс-лист"
                 >
                   📄 Открыть прайс-лист
                 </button>
@@ -209,9 +202,11 @@ const Products = () => {
             </div>
             
             <div className="contact-details">
-              <p><strong>📍 Адрес:</strong> г. Сибай, п-т Горняков 6/3-6<br/>
-              <strong>📞 Телефон:</strong> +7 (999) 134-83-20<br/>
-              <strong>✉️ Email:</strong> kunaksell@yandex.ru</p>
+              <p>
+                <strong>📍 Адрес:</strong> г. Сибай, п-т Горняков 6/3-6<br/>
+                <strong>📞 Телефон:</strong> +7 (999) 134-83-20<br/>
+                <strong>✉️ Email:</strong> kunaksell@yandex.ru
+              </p>
             </div>
           </div>
 
@@ -225,24 +220,42 @@ const Products = () => {
         </div>
       </div>
 
-      {/* МОДАЛЬНОЕ ОКНО С ПРАЙС-ЛИСТОМ */}
-    {showPriceModal && (
-  <div className="price-modal" onClick={() => setShowPriceModal(false)}>
-    <button 
-      className="price-modal-close" 
-      onClick={() => setShowPriceModal(false)}
-      aria-label="Закрыть прайс-лист"
-    >
-      ×
-    </button>
-    <div 
-      className="price-modal-content"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <PriceTable />
-    </div>
-  </div>
-)}
+      {/* Модальное окно для увеличенного фото */}
+      {selectedImg && (
+        <div onClick={() => setSelectedImg(null)} style={styles.modal}>
+          <img 
+            src={selectedImg} 
+            style={styles.modalImage} 
+            alt="Увеличенное фото" 
+          />
+          <button 
+            className="modal-close-btn"
+            onClick={() => setSelectedImg(null)}
+            aria-label="Закрыть"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
+      {/* Модальное окно с прайс-листом - ИСПРАВЛЕНО */}
+      {showPriceModal && (
+        <div className="price-modal-overlay" onClick={closePriceModal}>
+          <div 
+            className="price-modal-container"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              className="price-modal-close" 
+              onClick={closePriceModal}
+              aria-label="Закрыть прайс-лист"
+            >
+              ×
+            </button>
+            <PriceTable onClose={closePriceModal} />
+          </div>
+        </div>
+      )}
     </section>
   );
 };

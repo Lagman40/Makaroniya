@@ -1,5 +1,17 @@
-@import url('https://googleapis.com');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* :root переменные (добавьте, если их нет) */
+:root {
+  --accent: #646cff;
+  --accent-bg: rgba(100, 108, 255, 0.1);
+  --accent-border: #646cff;
+  --border: #e2e8f0;
+  --text-h: #1a202c;
+  --social-bg: #f7fafc;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Существующие стили */
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -11,7 +23,6 @@
   margin-bottom: 24px;
 }
 
-/* Раскройте вложенность для лучшей совместимости */
 .counter:hover {
   border-color: var(--accent-border);
 }
@@ -201,38 +212,151 @@
   border-right-color: var(--border);
 }
 
-/* В ваш App.css или index.css */
-.app-price-modal {
+/* ========== НОВЫЕ СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА ========== */
+
+/* Контейнер приложения */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+/* Блокировка прокрутки */
+.modal-open {
+  overflow: hidden !important;
+}
+
+/* Overlay модального окна */
+.price-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Чтобы быть поверх всего */
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.app-price-modal-content {
-  background: white;
-  color: #333;
-  padding: 20px;
-  border-radius: 8px;
+/* Контейнер модального окна */
+.price-modal-container {
   position: relative;
+  background: white;
+  border-radius: 12px;
   max-width: 90%;
-  max-height: 90%;
+  width: auto;
+  max-height: 85vh;
   overflow-y: auto;
+  animation: slideIn 0.3s ease-in-out;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-.app-price-modal-close {
+/* Стили для скроллбара внутри модалки */
+.price-modal-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.price-modal-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.price-modal-container::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+}
+
+.price-modal-container::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Кнопка закрытия */
+.price-modal-close {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
+  top: 12px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.1);
   border: none;
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: bold;
   cursor: pointer;
+  color: #666;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.price-modal-close:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #000;
+  transform: scale(1.1);
+}
+
+.price-modal-close:active {
+  transform: scale(0.95);
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .price-modal-container {
+    max-width: 95%;
+    max-height: 90vh;
+    border-radius: 8px;
+  }
+  
+  .price-modal-close {
+    top: 8px;
+    right: 12px;
+    font-size: 24px;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .price-modal-overlay {
+    background-color: rgba(0, 0, 0, 0.85);
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+  .price-modal-container {
+    max-width: 98%;
+    max-height: 95vh;
+  }
 }
 

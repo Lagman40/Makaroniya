@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import './PriceTable.css';
 
-const PriceTable = () => {
+const PriceTable = ({ onClose }) => { // Добавляем onClose пропс
   const products = [
-    { id: 1, name: 'Бишбармак', weight: '500 г', price: '90 ₽' },
-    { id: 2, name: 'Бишбармак', weight: '300 г', price: '60 ₽' },
-    { id: 3, name: 'Лапша яичная тукмас', weight: '200 г', price: '40 ₽' },
-    { id: 4, name: 'Жайма (Казахский бишбармак)', weight: '200 г', price: '40 ₽' },
-    { id: 5, name: 'Лагман короткорезанный', weight: '250 г', price: '50 ₽' },
-    { id: 6, name: 'Лагман в контейнере', weight: '250 г', price: '60 ₽' }
+    { id: 1, name: 'Бишбармак', weight: '500 г', price: 90 },
+    { id: 2, name: 'Бишбармак', weight: '300 г', price: 60 },
+    { id: 3, name: 'Лапша яичная тукмас', weight: '200 г', price: 40 },
+    { id: 4, name: 'Жайма (Казахский бишбармак)', weight: '200 г', price: 40 },
+    { id: 5, name: 'Лагман короткорезанный', weight: '250 г', price: 50 },
+    { id: 6, name: 'Лагман в контейнере', weight: '250 г', price: 60 }
   ];
 
   // Вычисляем дату один раз при рендере
@@ -21,7 +21,26 @@ const PriceTable = () => {
     })}`;
   }, []);
 
-  const handlePrint = () => window.print();
+  // Подсчет минимальной суммы и оптовой цены
+  const minOrderPrice = 500;
+  const wholesaleDiscount = 0.05;
+  const wholesaleThreshold = 10;
+  const freeDeliveryThreshold = 1500;
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  // Обработчик клавиши Escape
+  React.useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape' && onClose) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [onClose]);
 
   return (
     <div className="price-list">
@@ -48,7 +67,7 @@ const PriceTable = () => {
                   <td>{product.id}</td>
                   <td className="product-name">{product.name}</td>
                   <td className="product-weight">{product.weight}</td>
-                  <td className="price">{product.price}</td>
+                  <td className="price">{product.price} ₽</td>
                 </tr>
               ))}
             </tbody>
@@ -57,9 +76,9 @@ const PriceTable = () => {
         
         <div className="price-summary">
           <p><strong>📦 Условия заказа:</strong></p>
-          <p>• Минимальная сумма заказа: от 500 рублей</p>
-          <p>• Оптовые скидки: при заказе от 10 единиц одного товара — скидка 5%</p>
-          <p>• Доставка: по городу — бесплатно при заказе от 1500 рублей</p>
+          <p>• Минимальная сумма заказа: от {minOrderPrice} рублей</p>
+          <p>• Оптовые скидки: при заказе от {wholesaleThreshold} единиц одного товара — скидка {wholesaleDiscount * 100}%</p>
+          <p>• Доставка: по городу — бесплатно при заказе от {freeDeliveryThreshold} рублей</p>
         </div>
         
         <div className="company-info">
@@ -69,15 +88,21 @@ const PriceTable = () => {
           </div>
           <div className="info-block">
             <h4>⏰ Режим работы</h4>
-            <p>Пн-Пт: 09:00 - 19:00<br/>Вс: выходной</p>
+            <p>Пн-Пт: 09:00 - 19:00<br/>Сб: 10:00 - 16:00<br/>Вс: выходной</p>
           </div>
         </div>
       </div>
       
-      {/* Добавляем специальный класс для скрытия при печати */}
-      <button className="price-download-btn no-print" onClick={handlePrint}>
-        📄 Сохранить как PDF / Печать
-      </button>
+      <div className="price-actions no-print">
+        <button className="price-download-btn" onClick={handlePrint}>
+          📄 Сохранить как PDF / Печать
+        </button>
+        {onClose && (
+          <button className="price-close-btn" onClick={onClose}>
+            ✕ Закрыть
+          </button>
+        )}
+      </div>
     </div>
   );
 };
