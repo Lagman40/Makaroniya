@@ -1,3 +1,5 @@
+@import url('https://googleapis.com');
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -198,3 +200,39 @@
   right: 0;
   border-right-color: var(--border);
 }
+
+/* В ваш App.css или index.css */
+.app-price-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Чтобы быть поверх всего */
+}
+
+.app-price-modal-content {
+  background: white;
+  color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+.app-price-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+

@@ -1,9 +1,7 @@
-// src/components/PriceTable.jsx
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 import './PriceTable.css';
 
 const PriceTable = () => {
-  // Данные о продуктах
   const products = [
     { id: 1, name: 'Бишбармак', weight: '500 г', price: '90 ₽' },
     { id: 2, name: 'Бишбармак', weight: '300 г', price: '60 ₽' },
@@ -13,27 +11,24 @@ const PriceTable = () => {
     { id: 6, name: 'Лагман в контейнере', weight: '250 г', price: '60 ₽' }
   ];
 
-  // Автоматическое обновление даты
-  useEffect(() => {
-    const dateElement = document.querySelector('.price-date');
-    if (dateElement) {
-      const now = new Date();
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      dateElement.textContent = `Действителен с ${now.toLocaleDateString('ru-RU', options)}`;
-    }
+  // Вычисляем дату один раз при рендере
+  const formattedDate = useMemo(() => {
+    const now = new Date();
+    return `Действителен с ${now.toLocaleDateString('ru-RU', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })}`;
   }, []);
 
-  const handlePrint = () => {
-    window.print();
-  };
+  const handlePrint = () => window.print();
 
   return (
     <div className="price-list">
       <div className="price-header">
         <h1>🍜 ПРАЙС-ЛИСТ</h1>
         <p>ООО «МакарониЯ» — натуральная лапша и макаронные изделия</p>
-        <div className="price-date">
-        </div>
+        <div className="price-date">{formattedDate}</div>
       </div>
       
       <div className="price-content">
@@ -65,33 +60,23 @@ const PriceTable = () => {
           <p>• Минимальная сумма заказа: от 500 рублей</p>
           <p>• Оптовые скидки: при заказе от 10 единиц одного товара — скидка 5%</p>
           <p>• Доставка: по городу — бесплатно при заказе от 1500 рублей</p>
-          <p>• Самовывоз: г. Сибай, п-т Горняков 6/3-6</p>
         </div>
         
         <div className="company-info">
           <div className="info-block">
-            <h4>🏭 О производителе</h4>
-            <p>ООО «МакарониЯ» — семейное предприятие с 2012 года. Используем только натуральные ингредиенты без консервантов. Вся продукция проходит строгий контроль качества.</p>
-          </div>
-          
-          <div className="info-block">
             <h4>📞 Контакты</h4>
-            <p>Телефон: +7 (999) 134-83-20<br/>
-            Email: kunaksell@yandex.ru<br/>
-            Адрес: г. Сибай, п-т Горняков 6/3-6</p>
+            <p>+7 (999) 134-83-20<br/>kunaksell@yandex.ru</p>
           </div>
-          
           <div className="info-block">
             <h4>⏰ Режим работы</h4>
-            <p>Пн-Пт: 09:00 - 19:00<br/>
-            Сб: 10:00 - 16:00<br/>
-            Вс: выходной</p>
+            <p>Пн-Пт: 09:00 - 19:00<br/>Вс: выходной</p>
           </div>
         </div>
       </div>
       
-      <button className="price-download-btn" onClick={handlePrint}>
-        📄 Сохранить как PDF
+      {/* Добавляем специальный класс для скрытия при печати */}
+      <button className="price-download-btn no-print" onClick={handlePrint}>
+        📄 Сохранить как PDF / Печать
       </button>
     </div>
   );

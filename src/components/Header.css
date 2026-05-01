@@ -1,34 +1,31 @@
 /* Header.css */
 .app-header {
-  background-color: var(--accent);
-  padding: 20px 40px;
-  box-shadow: var(--shadow);
+  background-color: #1f8f26; /* Тот самый зеленый фон */
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .app-title {
+  color: #faa404; /* Оранжевый цвет для названия */
   margin: 0;
-  font-family: 'Georgia', serif;
-  font-size: 36px;
-  color: var(--bg);
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: bold;
+  /* Если хотите добавить немного объема, можно включить тень:
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2); */
 }
 
 .price-nav-btn {
-  background-color: var(--bg); /* Или любой светлый цвет */
-  color: var(--accent);
+  background-color: #faa404; /* Кнопку тоже можно сделать оранжевой в тон заголовку */
+  color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  transition: opacity 0.2s;
+  transition: opacity 0.3s;
 }
 
 .price-nav-btn:hover {
