@@ -20,36 +20,23 @@ const PriceTable = ({ onClose }) => {
     })}`;
   }, []);
 
-
-// Стало (исправленное):
-const handlePrint = () => {
-  try {
-    // Сохраняем текущее состояние
-    const originalTitle = document.title;
-    document.title = 'Прайс-лист МакарониЯ';
-    
-    // Вызываем печать
-    window.print();
-    
-    // Возвращаем заголовок
-    document.title = originalTitle;
-  } catch (error) {
-    console.error('Ошибка печати:', error);
-    alert('Произошла ошибка при открытии окна печати. Попробуйте еще раз.');
-  }
-};
-    
-    // Добавляем небольшую задержку для стабильности
-    setTimeout(() => {
-      try {
+  // ИСПРАВЛЕННАЯ ФУНКЦИЯ ПЕЧАТИ
+  const handlePrint = () => {
+    try {
+      const originalTitle = document.title;
+      document.title = 'Прайс-лист МакарониЯ';
+      
+      // Небольшая задержка помогает браузеру "собраться" перед открытием окна
+      setTimeout(() => {
         window.print();
-      } catch (error) {
-        console.error('Ошибка при печати:', error);
-        alert('Не удалось открыть окно печати. Пожалуйста, попробуйте позже.');
-      }
-    }, 100);
+        document.title = originalTitle;
+      }, 100);
+    } catch (error) {
+      console.error('Ошибка печати:', error);
+      alert('Не удалось открыть окно печати.');
+    }
+  };
 
-  // Обработчик клавиши Escape
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape' && onClose) {
@@ -134,3 +121,4 @@ const handlePrint = () => {
 };
 
 export default PriceTable;
+

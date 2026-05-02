@@ -474,3 +474,50 @@ body.modal-open {
   }
 }
 
+@media print {
+  /* 1. Скрываем абсолютно всё на странице */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* 2. Показываем только блок прайс-листа */
+  .price-list, .price-list * {
+    visibility: visible !important;
+  }
+
+  /* 3. Выносим прайс-лист из модального окна на весь лист */
+  .price-list {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 4. Убираем фон модалки (делаем его прозрачным) */
+  .price-modal, .price-modal-content {
+    position: static !important;
+    background: transparent !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  /* 5. Скрываем кнопки "Печать" и "Закрыть" на самом листе */
+  .no-print, .price-actions, .price-modal-close {
+    display: none !important;
+  }
+
+  /* Настройка для того, чтобы таблица не обрезалась */
+  table {
+    page-break-inside: auto;
+  }
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+}
+
+
