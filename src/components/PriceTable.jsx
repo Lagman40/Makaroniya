@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import './PriceTable.css';
 
-const PriceTable = ({ onClose }) => { // Добавляем onClose пропс
+const PriceTable = ({ onClose }) => {
   const products = [
     { id: 1, name: 'Бишбармак', weight: '500 г', price: 90 },
     { id: 2, name: 'Бишбармак', weight: '300 г', price: 60 },
@@ -11,7 +11,6 @@ const PriceTable = ({ onClose }) => { // Добавляем onClose пропс
     { id: 6, name: 'Лагман в контейнере', weight: '250 г', price: 60 }
   ];
 
-  // Вычисляем дату один раз при рендере
   const formattedDate = useMemo(() => {
     const now = new Date();
     return `Действителен с ${now.toLocaleDateString('ru-RU', { 
@@ -21,18 +20,37 @@ const PriceTable = ({ onClose }) => { // Добавляем onClose пропс
     })}`;
   }, []);
 
-  // Подсчет минимальной суммы и оптовой цены
-  const minOrderPrice = 500;
-  const wholesaleDiscount = 0.05;
-  const wholesaleThreshold = 10;
-  const freeDeliveryThreshold = 1500;
 
-  const handlePrint = () => {
+// Стало (исправленное):
+const handlePrint = () => {
+  try {
+    // Сохраняем текущее состояние
+    const originalTitle = document.title;
+    document.title = 'Прайс-лист МакарониЯ';
+    
+    // Вызываем печать
     window.print();
-  };
+    
+    // Возвращаем заголовок
+    document.title = originalTitle;
+  } catch (error) {
+    console.error('Ошибка печати:', error);
+    alert('Произошла ошибка при открытии окна печати. Попробуйте еще раз.');
+  }
+};
+    
+    // Добавляем небольшую задержку для стабильности
+    setTimeout(() => {
+      try {
+        window.print();
+      } catch (error) {
+        console.error('Ошибка при печати:', error);
+        alert('Не удалось открыть окно печати. Пожалуйста, попробуйте позже.');
+      }
+    }, 100);
 
   // Обработчик клавиши Escape
-  React.useEffect(() => {
+  useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape' && onClose) {
         onClose();
@@ -76,9 +94,9 @@ const PriceTable = ({ onClose }) => { // Добавляем onClose пропс
         
         <div className="price-summary">
           <p><strong>📦 Условия заказа:</strong></p>
-          <p>• Минимальная сумма заказа: от {minOrderPrice} рублей</p>
-          <p>• Оптовые скидки: при заказе от {wholesaleThreshold} единиц одного товара — скидка {wholesaleDiscount * 100}%</p>
-          <p>• Доставка: по городу — бесплатно при заказе от {freeDeliveryThreshold} рублей</p>
+          <p>• Минимальная сумма заказа: от 500 рублей</p>
+          <p>• Оптовые скидки: при заказе от 10 единиц одного товара — скидка 5%</p>
+          <p>• Доставка: по городу — бесплатно при заказе от 1500 рублей</p>
         </div>
         
         <div className="company-info">
@@ -94,11 +112,19 @@ const PriceTable = ({ onClose }) => { // Добавляем onClose пропс
       </div>
       
       <div className="price-actions no-print">
-        <button className="price-download-btn" onClick={handlePrint}>
-          📄 Сохранить как PDF / Печать
+        <button 
+          className="price-download-btn" 
+          onClick={handlePrint}
+          type="button"
+        >
+          🖨️ Сохранить как PDF / Печать
         </button>
         {onClose && (
-          <button className="price-close-btn" onClick={onClose}>
+          <button 
+            className="price-close-btn" 
+            onClick={onClose}
+            type="button"
+          >
             ✕ Закрыть
           </button>
         )}

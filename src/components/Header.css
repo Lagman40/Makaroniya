@@ -1,12 +1,14 @@
 /* Header.css */
 .app-header {
   background-color: #1f8f26; /* Тот самый зеленый фон */
-  padding: 15px 20px;
+   padding: 20px 40px;
+  box-shadow: var(--shadow);
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  top: 0;
+  z-index: 1000;
 }
 
 .app-title {
