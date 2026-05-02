@@ -520,4 +520,48 @@ body.modal-open {
   }
 }
 
+@media print {
+  /* 1. Скрываем всё */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* 2. Делаем модалку и контейнеры видимыми, но без фонов и фиксации */
+  .price-modal, 
+  .price-modal-content, 
+  .price-list, 
+  .price-list * {
+    visibility: visible !important;
+    display: block !important; /* Важно: убираем flex/none */
+    position: static !important;
+    background: transparent !important;
+    color: black !important;
+  }
+
+  /* 3. Растягиваем сам прайс на весь лист */
+  .price-list {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 4. Скрываем кнопки */
+  .price-actions, 
+  .price-modal-close, 
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* 5. Настройка таблицы, чтобы она не обрезалась */
+  .price-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+}
+
+
 
